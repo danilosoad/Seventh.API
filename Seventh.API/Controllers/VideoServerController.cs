@@ -19,7 +19,7 @@ namespace Seventh.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetServers()
         {
-            var servers = await _serverService.GetServers();
+            var servers = await _serverService.GetServersAsync();
 
             if (servers.Any())
                 return Ok(servers.ToList());
@@ -38,7 +38,7 @@ namespace Seventh.API.Controllers
         public async Task<IActionResult> CreateServer([FromBody] ServerViewModel viewModel)
         {
             var server = viewModel.ConvertToServer();
-            await _serverService.AddServer(server);
+            await _serverService.AddServerAsync(server);
 
             return Ok();
         }
@@ -48,6 +48,7 @@ namespace Seventh.API.Controllers
         public async Task<IActionResult> UpdateServer([FromBody] ServerViewModel viewModel)
         {
             var server = viewModel.ConvertToServer();
+            await _serverService.UpdateServerAsync(server);
             return Ok();
         }
 

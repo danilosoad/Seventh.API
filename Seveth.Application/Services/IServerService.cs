@@ -4,14 +4,14 @@ namespace Seventh.Application.Services
 {
     public interface IServerService
     {
-        Task AddServer(Server server);
+        Task AddServerAsync(Server server);
 
-        Task<IEnumerable<Server>> GetServers();
+        Task<IEnumerable<Server>> GetServersAsync();
 
-        Task<Server> GetServerById(Guid id);
+        Task<Server> GetServerByIdAsync(Guid id);
 
-        void UpdateServer(Server server);
+        Task UpdateServerAsync(Server server);
 
-        Task RemoveServer(Guid Id);
+        Task RemoveServerAsync(Guid Id);
     }
 }

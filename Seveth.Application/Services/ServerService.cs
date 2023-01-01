@@ -8,38 +8,41 @@ namespace Seventh.Application.Services
     public class ServerService : IServerService
     {
         private readonly IServerRepository _serverRepository;
+        private readonly ServerValidation _validator;
 
-        public ServerService(IServerRepository serverRepository)
+        public ServerService(IServerRepository serverRepository, ServerValidation validator)
         {
             _serverRepository = serverRepository;
+            _validator = validator;
         }
 
-        public async Task AddServer(Server server)
+        public async Task AddServerAsync(Server server)
         {
             var validator = new ServerValidation();
 
             await validator.ValidateAndThrowAsync(server);
-                
+
             await _serverRepository.AddServer(server);
         }
 
-        public async Task<Server> GetServerById(Guid id)
+        public async Task<Server> GetServerByIdAsync(Guid id)
         {
             return await _serverRepository.GetServerById(id);
         }
 
-        public async Task<IEnumerable<Server>> GetServers()
+        public async Task<IEnumerable<Server>> GetServersAsync()
         {
             return await _serverRepository.GetServers();
         }
 
-        public async Task RemoveServer(Guid Id)
+        public async Task RemoveServerAsync(Guid Id)
         {
             await _serverRepository.DeleteServerById(Id);
         }
 
-        public void UpdateServer(Server server)
+        public async Task UpdateServerAsync(Server server)
         {
+            _validator.ValidateAndThrow(server);
             _serverRepository.UpdateServer(server);
         }
     }

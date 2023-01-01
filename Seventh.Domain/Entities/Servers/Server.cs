@@ -25,5 +25,12 @@
             EnderecoIp = enderecoIp;
             PortaIp = portaIp;
         }
+
+        public void Update(Server server)
+        {
+            Name = server.Name;
+            EnderecoIp = server.EnderecoIp;
+            PortaIp = server.PortaIp;
+        }
     }
 }
