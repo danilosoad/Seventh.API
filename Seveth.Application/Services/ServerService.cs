@@ -43,6 +43,7 @@ namespace Seventh.Application.Services
         public async Task UpdateServerAsync(Server server)
         {
             _validator.ValidateAndThrow(server);
+
             _serverRepository.UpdateServer(server);
         }
     }
