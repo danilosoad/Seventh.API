@@ -1,7 +1,7 @@
 ﻿using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using Seventh.Domain.Entities.Servers;
-using Seventh.Domain.Entities.Video;
+using Seventh.Domain.Entities.Videos;
 using Seventh.Infra.Data.Mapping;
 
 namespace Seventh.Infra.Data.DataContext

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Seventh.API.ViewModels.Servers;
 using Seventh.API.ViewModels.Servers.Adapter;
+using Seventh.API.ViewModels.Videos;
+using Seventh.API.ViewModels.Videos.Adapter;
 using Seventh.Application.Services;
 
 namespace Seventh.API.Controllers
@@ -73,16 +75,26 @@ namespace Seventh.API.Controllers
 
         #region Video
 
-        [HttpGet]
-        [Route("{serverId}")]
-        public async Task<IActionResult> GetVideosByServerId(Guid serverId)
+        [HttpPost]
+        [Route("servers/{serverId}/videos")]
+        public async Task<IActionResult> AddVideo([FromBody] VideoViewModel viewModel, Guid serverId)
         {
-            //var video = await _serverService.GetServerByIdAsync(videoId);
-
-            //if (server == null)
-            //    return NoContent();
+            var video = viewModel.ConvertToVideo();
+            await _serverService.AddVideoAsync(video, serverId);
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("servers/{serverId}/videos")]
+        public async Task<IActionResult> GetVideosByServerId(Guid serverId)
+        {
+            var videos = await _serverService.GetVideosAsync(serverId);
+
+            if (videos.Any())
+                return Ok(videos);
+
+            return NoContent();
         }
 
         [HttpGet]
@@ -110,7 +122,7 @@ namespace Seventh.API.Controllers
         }
 
         [HttpDelete]
-        [Route("{videoId}")]
+        [Route("servers/{videoId}")]
         public async Task<IActionResult> DeleteVideoById(Guid videoId)
         {
             //var video = await _serverService.GetServerByIdAsync(videoId);

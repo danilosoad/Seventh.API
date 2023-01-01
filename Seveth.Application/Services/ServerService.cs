@@ -2,6 +2,7 @@
 using Seventh.Domain.Entities.Servers;
 using Seventh.Domain.Entities.Servers.Repository;
 using Seventh.Domain.Entities.Servers.Validation;
+using Seventh.Domain.Entities.Videos;
 
 namespace Seventh.Application.Services
 {
@@ -15,6 +16,8 @@ namespace Seventh.Application.Services
             _serverRepository = serverRepository;
             _validator = validator;
         }
+
+        #region Server
 
         public async Task AddServerAsync(Server server)
         {
@@ -55,5 +58,46 @@ namespace Seventh.Application.Services
                 _serverRepository.UpdateServer(currentServer);
             }
         }
+
+        #endregion Server
+
+        #region Video
+
+        public async Task AddVideoAsync(Video video, Guid serverId)
+        {
+            //add validation to video
+            var server = await _serverRepository.GetServerById(serverId);
+
+            if (server != null)
+            {
+                server.AddVideo(video);
+                _serverRepository.UpdateServer(server);
+            }
+            else
+            {
+                throw new Exception("servidor não encontrado");
+            }
+        }
+
+        public Task<Server> GetVideoByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Video>> GetVideosAsync(Guid serverId)
+        {
+            var server = await _serverRepository.GetServerById(serverId);
+            if (server != null)
+                return await _serverRepository.GetVideosByServerId(server.Id);
+
+            return await Task.FromResult(Enumerable.Empty<Video>());
+        }
+
+        public Task RemoveVideoAsync(Guid Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion Video
     }
 }

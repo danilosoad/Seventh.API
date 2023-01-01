@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Seventh.Domain.Entities.Servers;
 using Seventh.Domain.Entities.Servers.Repository;
+using Seventh.Domain.Entities.Videos;
 using Seventh.Infra.Data.DataContext;
 
 namespace Seventh.Infra.Data.Repository
@@ -28,7 +29,7 @@ namespace Seventh.Infra.Data.Repository
 
         public async Task<Server> GetServerById(Guid id)
         {
-            return await _context.Servers.AsQueryable().AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Servers.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IEnumerable<Server>> GetServers()
@@ -40,6 +41,13 @@ namespace Seventh.Infra.Data.Repository
         {
             _context.Servers.Update(server);
             _context.SaveChanges();
+        }
+
+        public async Task<IEnumerable<Video>> GetVideosByServerId(Guid Id)
+        {
+            var videos = await _context.Servers.AsQueryable().AsNoTracking().FirstOrDefaultAsync(x => x.Id == Id);
+
+            return videos.Videos;
         }
     }
 }
