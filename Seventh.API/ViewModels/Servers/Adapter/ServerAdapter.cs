@@ -8,5 +8,10 @@ namespace Seventh.API.ViewModels.Servers.Adapter
         {
             return new Server(Guid.NewGuid(), viewModel.Name, viewModel.EnderecoIp, viewModel.PortaIp);
         }
+
+        public static Server ConvertToServer(this ServerViewModel viewModel, Guid id)
+        {
+            return new Server(id, viewModel.Name, viewModel.EnderecoIp, viewModel.PortaIp);
+        }
     }
 }

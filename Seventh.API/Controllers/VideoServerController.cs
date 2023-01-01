@@ -31,7 +31,12 @@ namespace Seventh.API.Controllers
         [Route("{serverId}")]
         public async Task<IActionResult> GetServerbyId(Guid serverId)
         {
-            return Ok();
+            var server = await _serverService.GetServerByIdAsync(serverId);
+
+            if (server == null)
+                return NoContent();
+
+            return Ok(server);
         }
 
         [HttpPost]
@@ -40,14 +45,14 @@ namespace Seventh.API.Controllers
             var server = viewModel.ConvertToServer();
             await _serverService.AddServerAsync(server);
 
-            return Ok();
+            return Ok(server.Id);
         }
 
         [HttpPut]
         [Route("{serverId}")]
-        public async Task<IActionResult> UpdateServer([FromBody] ServerViewModel viewModel)
+        public async Task<IActionResult> UpdateServer([FromBody] ServerViewModel viewModel, Guid serverId)
         {
-            var server = viewModel.ConvertToServer();
+            var server = viewModel.ConvertToServer(serverId);
             await _serverService.UpdateServerAsync(server);
             return Ok();
         }
@@ -56,6 +61,7 @@ namespace Seventh.API.Controllers
         [Route("{serverId}")]
         public async Task<IActionResult> RemoveServer(Guid serverId)
         {
+            await _serverService.RemoveServerAsync(serverId);
             return Ok();
         }
     }

@@ -1,6 +1,7 @@
 ﻿using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using Seventh.Domain.Entities.Servers;
+using Seventh.Domain.Entities.Video;
 using Seventh.Infra.Data.Mapping;
 
 namespace Seventh.Infra.Data.DataContext
@@ -8,6 +9,7 @@ namespace Seventh.Infra.Data.DataContext
     public class Context : DbContext
     {
         public DbSet<Server> Servers { get; set; }
+        public DbSet<Video> Videos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

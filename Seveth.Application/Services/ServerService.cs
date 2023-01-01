@@ -37,14 +37,23 @@ namespace Seventh.Application.Services
 
         public async Task RemoveServerAsync(Guid Id)
         {
-            await _serverRepository.DeleteServerById(Id);
+            var currentServer = await _serverRepository.GetServerById(Id);
+
+            if (currentServer != null)
+                _serverRepository.DeleteServerById(currentServer);
         }
 
         public async Task UpdateServerAsync(Server server)
         {
             _validator.ValidateAndThrow(server);
 
-            _serverRepository.UpdateServer(server);
+            var currentServer = await _serverRepository.GetServerById(server.Id);
+
+            if (currentServer != null)
+            {
+                currentServer.Update(server);
+                _serverRepository.UpdateServer(currentServer);
+            }
         }
     }
 }

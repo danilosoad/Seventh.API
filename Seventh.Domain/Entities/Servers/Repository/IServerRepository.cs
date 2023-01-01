@@ -10,6 +10,6 @@
 
         Task<IEnumerable<Server>> GetServers();
 
-        Task DeleteServerById(Guid id);
+        void DeleteServerById(Server server);
     }
 }

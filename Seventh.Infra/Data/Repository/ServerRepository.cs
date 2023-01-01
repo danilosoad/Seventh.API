@@ -20,14 +20,15 @@ namespace Seventh.Infra.Data.Repository
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteServerById(Guid id)
+        public void DeleteServerById(Server server)
         {
-            throw new NotImplementedException();
+            _context.Servers.Remove(server);
+            _context.SaveChanges();
         }
 
-        public Task<Server> GetServerById(Guid id)
+        public async Task<Server> GetServerById(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Servers.AsQueryable().AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IEnumerable<Server>> GetServers()
@@ -37,7 +38,8 @@ namespace Seventh.Infra.Data.Repository
 
         public void UpdateServer(Server server)
         {
-            throw new NotImplementedException();
+            _context.Servers.Update(server);
+            _context.SaveChanges();
         }
     }
 }

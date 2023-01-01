@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Seventh.Application.Services;
 using Seventh.Domain.Entities.Servers.Repository;
+using Seventh.Domain.Entities.Servers.Validation;
 using Seventh.Infra.Data.DataContext;
 using Seventh.Infra.Data.Repository;
 
@@ -15,6 +16,7 @@ namespace Seventh.Infra.IoC
 
             //Data
             services.AddScoped<Context>();
+            services.AddScoped<ServerValidation>();
             services.AddScoped<IServerRepository, ServerRepository>();
         }
     }
