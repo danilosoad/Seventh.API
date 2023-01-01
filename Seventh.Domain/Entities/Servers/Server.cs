@@ -2,7 +2,6 @@
 {
     public class Server : BaseEntity
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string EnderecoIp { get; set; }
         public int PortaIp { get; set; }
@@ -21,7 +20,7 @@
 
         public Server(string name, string enderecoIp, int portaIp)
         {
-            Id = new Guid();
+            Id = Guid.NewGuid();
             Name = name;
             EnderecoIp = enderecoIp;
             PortaIp = portaIp;

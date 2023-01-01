@@ -1,5 +1,7 @@
-﻿using Seventh.Domain.Entities.Servers;
+﻿using FluentValidation;
+using Seventh.Domain.Entities.Servers;
 using Seventh.Domain.Entities.Servers.Repository;
+using Seventh.Domain.Entities.Servers.Validation;
 
 namespace Seventh.Application.Services
 {
@@ -14,6 +16,10 @@ namespace Seventh.Application.Services
 
         public async Task AddServer(Server server)
         {
+            var validator = new ServerValidation();
+
+            await validator.ValidateAndThrowAsync(server);
+                
             await _serverRepository.AddServer(server);
         }
 

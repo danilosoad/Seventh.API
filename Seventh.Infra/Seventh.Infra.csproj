@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Seveth.Application\Seventh.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\NewFolder\" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation.Results;
+using Microsoft.EntityFrameworkCore;
 using Seventh.Domain.Entities.Servers;
+using Seventh.Infra.Data.Mapping;
 
 namespace Seventh.Infra.Data.DataContext
 {
@@ -10,6 +12,16 @@ namespace Seventh.Infra.Data.DataContext
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseInMemoryDatabase(databaseName: "SeventhDb");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Ignore<ValidationResult>();
+            modelBuilder.Ignore<ValidationFailure>();
+
+            modelBuilder.ApplyConfiguration(new ServerMap());
         }
     }
 }
