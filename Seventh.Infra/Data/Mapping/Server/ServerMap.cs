@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Seventh.Domain.Entities.Servers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Seventh.Infra.Data.Mapping.Server
+namespace Seventh.Infra.Data.Mapping
 {
-    internal class ServerMap
+    public class ServerMap : BaseMappingg<Server>
     {
     }
 }
