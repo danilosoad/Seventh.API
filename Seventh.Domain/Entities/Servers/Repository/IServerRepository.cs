@@ -20,6 +20,7 @@ namespace Seventh.Domain.Entities.Servers.Repository
 
         #region Video
         //Task AddVideo(Server server);
+        Task AddVideo(Video video);
         Task<IEnumerable<Video>> GetVideosByServerId(Guid Id);
 
         #endregion Video

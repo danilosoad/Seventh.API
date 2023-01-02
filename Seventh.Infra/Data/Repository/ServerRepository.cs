@@ -49,5 +49,11 @@ namespace Seventh.Infra.Data.Repository
 
             return videos.Videos;
         }
+
+        public async Task AddVideo(Video video)
+        {
+            await _context.AddAsync(video);
+            await _context.SaveChangesAsync();
+        }
     }
 }
