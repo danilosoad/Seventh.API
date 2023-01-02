@@ -10,7 +10,7 @@ namespace Seventh.Infra.Data.Mapping.Videos
             base.Configure(builder);
 
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).IsRequired();
+            builder.Property(x => x.Id).IsRequired().ValueGeneratedNever();
             builder.Property(x => x.CreatedAt).IsRequired();
             builder.Property(x => x.Description).IsRequired();
         }

@@ -70,8 +70,9 @@ namespace Seventh.Application.Services
 
             if (server != null)
             {
-                server.AddVideo(video);
-                _serverRepository.UpdateServer(server);
+                //server.AddVideo(video);
+                //_serverRepository.UpdateServer(server);
+               await _serverRepository.AddVideo(video);
             }
             else
             {

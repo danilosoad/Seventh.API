@@ -34,7 +34,10 @@ namespace Seventh.Infra.Data.Repository
 
         public async Task<IEnumerable<Server>> GetServers()
         {
-            return await _context.Servers.AsQueryable().AsNoTracking().ToListAsync();
+            return await _context.Servers.AsQueryable()
+                                         .AsNoTracking()
+                                         .Include(x => x.Videos)
+                                         .ToListAsync();
         }
 
         public void UpdateServer(Server server)

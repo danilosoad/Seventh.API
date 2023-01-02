@@ -79,7 +79,7 @@ namespace Seventh.API.Controllers
         [Route("servers/{serverId}/videos")]
         public async Task<IActionResult> AddVideo([FromBody] VideoViewModel viewModel, Guid serverId)
         {
-            var video = viewModel.ConvertToVideo();
+            var video = viewModel.ConvertToVideo(serverId);
             await _serverService.AddVideoAsync(video, serverId);
 
             return Ok();

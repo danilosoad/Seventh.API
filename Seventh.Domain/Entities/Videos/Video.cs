@@ -18,12 +18,13 @@ namespace Seventh.Domain.Entities.Videos
         {
         }
 
-        public Video(string description, byte[] videoContent)
+        public Video(string description, byte[] videoContent, Guid serverId)
         {
             Id = Guid.NewGuid();
             Description = description;
             VideoContent = videoContent;
             CreatedAt = DateTime.Now;
+            ServerId = serverId;
         }
     }
 }

@@ -2,7 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Seventh.Domain.Entities.Servers;
 using Seventh.Domain.Entities.Videos;
-using Seventh.Infra.Data.Mapping;
+using Seventh.Infra.Data.Mapping.Servers;
+using Seventh.Infra.Data.Mapping.Videos;
 
 namespace Seventh.Infra.Data.DataContext
 {
@@ -24,6 +25,7 @@ namespace Seventh.Infra.Data.DataContext
             modelBuilder.Ignore<ValidationFailure>();
 
             modelBuilder.ApplyConfiguration(new ServerMap());
+            modelBuilder.ApplyConfiguration(new VideoMap());
         }
     }
 }
