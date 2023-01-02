@@ -12,6 +12,8 @@ namespace Seventh.Domain.Entities.Servers.Repository
 
         Task<Server> GetServerById(Guid id);
 
+        Task<bool> IsServerAvailableById(Guid id);
+
         Task<IEnumerable<Server>> GetServers();
 
         void DeleteServerById(Server server);
@@ -19,8 +21,10 @@ namespace Seventh.Domain.Entities.Servers.Repository
         #endregion Server
 
         #region Video
+
         //Task AddVideo(Server server);
         Task AddVideo(Video video);
+
         Task<IEnumerable<Video>> GetVideosByServerId(Guid Id);
 
         #endregion Video

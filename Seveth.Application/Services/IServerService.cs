@@ -13,6 +13,8 @@ namespace Seventh.Application.Services
 
         Task<Server> GetServerByIdAsync(Guid id);
 
+        Task<bool> IsServerAvailable(Guid id);
+
         Task UpdateServerAsync(Server server);
 
         Task RemoveServerAsync(Guid Id);

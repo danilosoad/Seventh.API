@@ -28,6 +28,11 @@ namespace Seventh.Application.Services
             await _serverRepository.AddServer(server);
         }
 
+        public async Task<bool> IsServerAvailable(Guid id)
+        {
+            return await _serverRepository.IsServerAvailableById(id);
+        }
+
         public async Task<Server> GetServerByIdAsync(Guid id)
         {
             return await _serverRepository.GetServerById(id);
@@ -72,7 +77,7 @@ namespace Seventh.Application.Services
             {
                 //server.AddVideo(video);
                 //_serverRepository.UpdateServer(server);
-               await _serverRepository.AddVideo(video);
+                await _serverRepository.AddVideo(video);
             }
             else
             {

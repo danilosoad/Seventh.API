@@ -27,6 +27,11 @@ namespace Seventh.Infra.Data.Repository
             _context.SaveChanges();
         }
 
+        public async Task<bool> IsServerAvailableById(Guid id)
+        {
+            return await _context.Servers.AnyAsync(x => x.Id == id);
+        }
+
         public async Task<Server> GetServerById(Guid id)
         {
             return await _context.Servers.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);

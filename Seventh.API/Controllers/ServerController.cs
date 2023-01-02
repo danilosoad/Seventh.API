@@ -33,6 +33,15 @@ namespace Seventh.API.Controllers
         }
 
         [HttpGet]
+        [Route("servers/available/{serverId}​")]
+        public async Task<IActionResult> IsServerAvailable(Guid serverId)
+        {
+            var isAvailable = await _serverService.IsServerAvailable(serverId);
+
+            return Ok(isAvailable);
+        }
+
+        [HttpGet]
         [Route("servers/{serverId}")]
         public async Task<IActionResult> GetServerbyId(Guid serverId)
         {
