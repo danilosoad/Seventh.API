@@ -25,27 +25,27 @@ namespace Seventh.Application.Services
 
             await validator.ValidateAndThrowAsync(server);
 
-            await _serverRepository.AddServer(server);
+            await _serverRepository.AddServerAsync(server);
         }
 
         public async Task<bool> IsServerAvailable(Guid id)
         {
-            return await _serverRepository.IsServerAvailableById(id);
+            return await _serverRepository.IsServerAvailableByIdAsync(id);
         }
 
         public async Task<Server> GetServerByIdAsync(Guid id)
         {
-            return await _serverRepository.GetServerById(id);
+            return await _serverRepository.GetServerByIdAsync(id);
         }
 
         public async Task<IEnumerable<Server>> GetServersAsync()
         {
-            return await _serverRepository.GetServers();
+            return await _serverRepository.GetServersAsync();
         }
 
         public async Task RemoveServerAsync(Guid Id)
         {
-            var currentServer = await _serverRepository.GetServerById(Id);
+            var currentServer = await _serverRepository.GetServerByIdAsync(Id);
 
             if (currentServer != null)
                 _serverRepository.DeleteServerById(currentServer);
@@ -55,7 +55,7 @@ namespace Seventh.Application.Services
         {
             _validator.ValidateAndThrow(server);
 
-            var currentServer = await _serverRepository.GetServerById(server.Id);
+            var currentServer = await _serverRepository.GetServerByIdAsync(server.Id);
 
             if (currentServer != null)
             {
@@ -71,13 +71,13 @@ namespace Seventh.Application.Services
         public async Task AddVideoAsync(Video video, Guid serverId)
         {
             //add validation to video
-            var server = await _serverRepository.GetServerById(serverId);
+            var server = await _serverRepository.GetServerByIdAsync(serverId);
 
             if (server != null)
             {
                 //server.AddVideo(video);
                 //_serverRepository.UpdateServer(server);
-                await _serverRepository.AddVideo(video);
+                await _serverRepository.AddVideoAsync(video);
             }
             else
             {
@@ -85,16 +85,19 @@ namespace Seventh.Application.Services
             }
         }
 
-        public Task<Server> GetVideoByIdAsync(Guid id)
+        public async Task<Server> GetVideoByIdAsync(Guid serverId, Guid videoId)
         {
-            throw new NotImplementedException();
+            var server = await _serverRepository.GetServerByIdAsync(serverId);
+
+            if (server != null)
+                return 
         }
 
         public async Task<IEnumerable<Video>> GetVideosAsync(Guid serverId)
         {
-            var server = await _serverRepository.GetServerById(serverId);
+            var server = await _serverRepository.GetServerByIdAsync(serverId);
             if (server != null)
-                return await _serverRepository.GetVideosByServerId(server.Id);
+                return await _serverRepository.GetVideosByServerIdAsync(server.Id);
 
             return await Task.FromResult(Enumerable.Empty<Video>());
         }

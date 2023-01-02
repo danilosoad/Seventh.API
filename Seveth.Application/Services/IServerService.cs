@@ -27,7 +27,7 @@ namespace Seventh.Application.Services
 
         Task<IEnumerable<Video>> GetVideosAsync(Guid serverId);
 
-        Task<Server> GetVideoByIdAsync(Guid id);
+        Task<Server> GetVideoByIdAsync(Guid serverId,Guid videoId);
 
         //Task UpdateServerAsync(Server server);
 

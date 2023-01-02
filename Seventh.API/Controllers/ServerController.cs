@@ -107,10 +107,10 @@ namespace Seventh.API.Controllers
         }
 
         [HttpGet]
-        [Route("{videoId}")]
-        public async Task<IActionResult> GetVideoById(Guid videoId)
+        [Route("servers/{serverId}/videos/{videoId}​")]
+        public async Task<IActionResult> GetVideoById(Guid serverId, Guid videoId)
         {
-            //var video = await _serverService.GetServerByIdAsync(videoId);
+            var video = await _serverService.GetVideoByIdAsync(serverId,videoId);
 
             //if (server == null)
             //    return NoContent();

@@ -6,15 +6,15 @@ namespace Seventh.Domain.Entities.Servers.Repository
     {
         #region Server
 
-        Task AddServer(Server server);
+        Task AddServerAsync(Server server);
 
         void UpdateServer(Server server);
 
-        Task<Server> GetServerById(Guid id);
+        Task<Server> GetServerByIdAsync(Guid id);
 
-        Task<bool> IsServerAvailableById(Guid id);
+        Task<bool> IsServerAvailableByIdAsync(Guid id);
 
-        Task<IEnumerable<Server>> GetServers();
+        Task<IEnumerable<Server>> GetServersAsync();
 
         void DeleteServerById(Server server);
 
@@ -23,9 +23,9 @@ namespace Seventh.Domain.Entities.Servers.Repository
         #region Video
 
         //Task AddVideo(Server server);
-        Task AddVideo(Video video);
+        Task AddVideoAsync(Video video);
 
-        Task<IEnumerable<Video>> GetVideosByServerId(Guid Id);
+        Task<IEnumerable<Video>> GetVideosByServerIdAsync(Guid Id);
 
         #endregion Video
     }

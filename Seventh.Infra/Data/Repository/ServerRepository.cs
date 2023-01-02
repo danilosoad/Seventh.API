@@ -15,7 +15,7 @@ namespace Seventh.Infra.Data.Repository
             _context = context;
         }
 
-        public async Task AddServer(Server server)
+        public async Task AddServerAsync(Server server)
         {
             await _context.AddAsync(server);
             await _context.SaveChangesAsync();
@@ -27,17 +27,17 @@ namespace Seventh.Infra.Data.Repository
             _context.SaveChanges();
         }
 
-        public async Task<bool> IsServerAvailableById(Guid id)
+        public async Task<bool> IsServerAvailableByIdAsync(Guid id)
         {
             return await _context.Servers.AnyAsync(x => x.Id == id);
         }
 
-        public async Task<Server> GetServerById(Guid id)
+        public async Task<Server> GetServerByIdAsync(Guid id)
         {
             return await _context.Servers.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<Server>> GetServers()
+        public async Task<IEnumerable<Server>> GetServersAsync()
         {
             return await _context.Servers.AsQueryable()
                                          .AsNoTracking()
@@ -51,14 +51,14 @@ namespace Seventh.Infra.Data.Repository
             _context.SaveChanges();
         }
 
-        public async Task<IEnumerable<Video>> GetVideosByServerId(Guid Id)
+        public async Task<IEnumerable<Video>> GetVideosByServerIdAsync(Guid Id)
         {
             var videos = await _context.Servers.AsQueryable().AsNoTracking().FirstOrDefaultAsync(x => x.Id == Id);
 
             return videos.Videos;
         }
 
-        public async Task AddVideo(Video video)
+        public async Task AddVideoAsync(Video video)
         {
             await _context.AddAsync(video);
             await _context.SaveChangesAsync();
