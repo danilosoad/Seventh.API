@@ -1,4 +1,5 @@
-﻿using Seventh.Domain.Entities.Servers;
+﻿using Seventh.Application.DTO;
+using Seventh.Domain.Entities.Servers;
 using Seventh.Domain.Entities.Videos;
 
 namespace Seventh.Application.Services
@@ -27,11 +28,11 @@ namespace Seventh.Application.Services
 
         Task<IEnumerable<Video>> GetVideosAsync(Guid serverId);
 
-        Task<Server> GetVideoByIdAsync(Guid serverId,Guid videoId);
+        Task<VideoDTO> GetVideoByIdAsync(Guid serverId, Guid videoId);
 
-        //Task UpdateServerAsync(Server server);
+        Task<byte[]> GetVideoContent(Guid serverId, Guid videoId);
 
-        Task RemoveVideoAsync(Guid Id);
+        Task RemoveVideoAsync(Guid serverId, Guid videoId);
 
         #endregion Videos
     }

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Seventh.Application.DTO;
 using Seventh.Domain.Entities.Servers;
 using Seventh.Domain.Entities.Servers.Repository;
 using Seventh.Domain.Entities.Servers.Validation;
@@ -85,26 +86,62 @@ namespace Seventh.Application.Services
             }
         }
 
-        public async Task<Server> GetVideoByIdAsync(Guid serverId, Guid videoId)
+        public async Task<VideoDTO> GetVideoByIdAsync(Guid serverId, Guid videoId)
         {
             var server = await _serverRepository.GetServerByIdAsync(serverId);
 
             if (server != null)
-                return 
+            {
+                var video = await _serverRepository.GetVideosByIdAsync(videoId);
+
+                return new VideoDTO() { CreatedAt = video.CreatedAt, Description = video.Description, ServerId = video.ServerId };
+            }
+
+            throw new Exception("servidor não encontrado");
         }
 
         public async Task<IEnumerable<Video>> GetVideosAsync(Guid serverId)
         {
             var server = await _serverRepository.GetServerByIdAsync(serverId);
+
             if (server != null)
                 return await _serverRepository.GetVideosByServerIdAsync(server.Id);
 
             return await Task.FromResult(Enumerable.Empty<Video>());
         }
 
-        public Task RemoveVideoAsync(Guid Id)
+        public async Task<byte[]> GetVideoContent(Guid serverId, Guid videoId)
         {
-            throw new NotImplementedException();
+            var server = await _serverRepository.GetServerByIdAsync(serverId);
+
+            if (server != null)
+            {
+                var video = await _serverRepository.GetVideosByIdAsync(videoId);
+
+                if (video != null)
+                    return await _serverRepository.GetVideoContentAsync(videoId);
+                else
+                    throw new Exception("video não encontrado");
+            }
+            else
+                throw new Exception("servidor não encontrado");
+        }
+
+        public async Task RemoveVideoAsync(Guid serverId, Guid videoId)
+        {
+            var server = await _serverRepository.GetServerByIdAsync(serverId);
+
+            if (server != null)
+            {
+                var video = await _serverRepository.GetVideosByIdAsync(videoId);
+
+                if (video != null)
+                    _serverRepository.DeleteVideo(video);
+                else
+                    throw new Exception("video não encontrado");
+            }
+            else
+                throw new Exception("servidor não encontrado");
         }
 
         #endregion Video

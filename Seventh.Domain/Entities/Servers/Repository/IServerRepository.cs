@@ -22,10 +22,16 @@ namespace Seventh.Domain.Entities.Servers.Repository
 
         #region Video
 
-        //Task AddVideo(Server server);
         Task AddVideoAsync(Video video);
 
         Task<IEnumerable<Video>> GetVideosByServerIdAsync(Guid Id);
+
+        Task<Video> GetVideosByIdAsync(Guid Id);
+
+        Task<byte[]> GetVideoContentAsync(Guid id);
+
+        void DeleteVideo(Video video);
+
 
         #endregion Video
     }

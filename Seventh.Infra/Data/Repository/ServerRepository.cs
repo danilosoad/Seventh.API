@@ -58,10 +58,28 @@ namespace Seventh.Infra.Data.Repository
             return videos.Videos;
         }
 
+        public async Task<Video> GetVideosByIdAsync(Guid Id)
+        {
+            return await _context.Videos.AsQueryable().AsNoTracking().FirstOrDefaultAsync(x => x.Id == Id);
+        }
+
+        public async Task<byte[]> GetVideoContentAsync(Guid id)
+        {
+            var video = await _context.Videos.AsQueryable().AsNoTracking().FirstOrDefaultAsync();
+
+            return video.VideoContent;
+        }
+
         public async Task AddVideoAsync(Video video)
         {
             await _context.AddAsync(video);
             await _context.SaveChangesAsync();
+        }
+
+        public void DeleteVideo(Video video)
+        {
+            _context.Videos.Remove(video);
+            _context.SaveChanges();
         }
     }
 }

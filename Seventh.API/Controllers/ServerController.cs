@@ -110,34 +110,31 @@ namespace Seventh.API.Controllers
         [Route("servers/{serverId}/videos/{videoId}​")]
         public async Task<IActionResult> GetVideoById(Guid serverId, Guid videoId)
         {
-            var video = await _serverService.GetVideoByIdAsync(serverId,videoId);
+            var video = await _serverService.GetVideoByIdAsync(serverId, videoId);
 
-            //if (server == null)
-            //    return NoContent();
+            if (video == null)
+                return NoContent();
 
-            return Ok();
+            return Ok(video);
         }
 
         [HttpGet]
-        [Route("{videoId}/content")]
-        public async Task<IActionResult> GetVideoContentById(Guid videoId)
+        [Route("servers/{serverId}/videos/{videoId}/binary​")]
+        public async Task<IActionResult> GetVideoContentById(Guid serverId, Guid videoId)
         {
-            //var video = await _serverService.GetServerByIdAsync(videoId);
+            var videoBinaryContent = await _serverService.GetVideoContent(serverId, videoId);
 
-            //if (server == null)
-            //    return NoContent();
+            if (videoBinaryContent == null)
+                return NoContent();
 
-            return Ok();
+            return Ok(videoBinaryContent);
         }
 
         [HttpDelete]
-        [Route("servers/{videoId}")]
-        public async Task<IActionResult> DeleteVideoById(Guid videoId)
+        [Route("servers/{serverId}/videos/{videoId}​")]
+        public async Task<IActionResult> DeleteVideoById(Guid serverId, Guid videoId)
         {
-            //var video = await _serverService.GetServerByIdAsync(videoId);
-
-            //if (server == null)
-            //    return NoContent();
+            await _serverService.RemoveVideoAsync(serverId, videoId);
 
             return Ok();
         }
