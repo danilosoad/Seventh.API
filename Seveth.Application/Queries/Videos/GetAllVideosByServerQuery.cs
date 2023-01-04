@@ -3,7 +3,7 @@ using Seventh.Application.Responses;
 
 namespace Seventh.Application.Queries.Videos
 {
-    public class GetAllVideosByServerQuery : IRequest<GetAllVideosByServerResponse>
+    public class GetAllVideosByServerQuery : IRequest<GetAllVideosByServerQueryResponse>
     {
         public Guid ServerId { get; set; }
 

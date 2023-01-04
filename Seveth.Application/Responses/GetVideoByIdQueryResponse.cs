@@ -2,7 +2,7 @@
 
 namespace Seventh.Application.Responses
 {
-    public class GetVideoByIdResponse
+    public class GetVideoByIdQueryResponse
     {
         public VideoDTO Video { get; set; }
     }

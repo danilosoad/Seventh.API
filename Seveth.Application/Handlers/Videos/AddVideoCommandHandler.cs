@@ -7,7 +7,7 @@ using Seventh.Domain.Notifications;
 
 namespace Seventh.Application.Handlers.Videos
 {
-    public class AddVideoCommandHandler : IRequestHandler<AddVideoCommand, AddVideoResponse>
+    public class AddVideoCommandHandler : IRequestHandler<AddVideoCommand, AddVideoCommandResponse>
     {
         private readonly IServerRepository _serverRepository;
         private readonly NotificationContext _notificationContext;
@@ -18,7 +18,7 @@ namespace Seventh.Application.Handlers.Videos
             _notificationContext = notificationContext;
         }
 
-        public async Task<AddVideoResponse> Handle(AddVideoCommand request, CancellationToken cancellationToken)
+        public async Task<AddVideoCommandResponse> Handle(AddVideoCommand request, CancellationToken cancellationToken)
         {
             //add video validation
             var video = new Video(request.Description, request.VideoContent, request.ServerId);
@@ -26,12 +26,12 @@ namespace Seventh.Application.Handlers.Videos
             if (video.Invalid)
             {
                 _notificationContext.AddNotifications(video.ValidationResult);
-                return new AddVideoResponse();
+                return new AddVideoCommandResponse();
             }
 
             await _serverRepository.AddVideoAsync(video);
 
-            return new AddVideoResponse() { IdVideo = video.Id, Message = "Video adicionado com sucesso." };
+            return new AddVideoCommandResponse() { IdVideo = video.Id, Message = "Video adicionado com sucesso." };
         }
     }
 }

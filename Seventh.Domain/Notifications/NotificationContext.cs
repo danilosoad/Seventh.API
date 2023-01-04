@@ -1,9 +1,13 @@
-﻿namespace Seventh.Domain.Notifications
+﻿using FluentValidation.Results;
+
+namespace Seventh.Domain.Notifications
 {
     public class NotificationContext
     {
         private readonly List<Notification> _notifications;
+
         public IReadOnlyCollection<Notification> Notifications => _notifications;
+
         public bool HasNotifications => _notifications.Any();
 
         public NotificationContext()

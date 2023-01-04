@@ -2,9 +2,9 @@
 
 namespace Seventh.Application.Responses
 {
-    public class GetAllVideosByServerResponse
+    public class GetAllVideosByServerQueryResponse
     {
-        public GetAllVideosByServerResponse()
+        public GetAllVideosByServerQueryResponse()
         {
             Videos = new List<VideoDTO>();
         }

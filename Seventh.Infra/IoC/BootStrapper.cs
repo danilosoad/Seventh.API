@@ -9,6 +9,7 @@ using Seventh.Application.Responses;
 using Seventh.Application.Services;
 using Seventh.Domain.Entities.Servers.Repository;
 using Seventh.Domain.Entities.Servers.Validation;
+using Seventh.Domain.Notifications;
 using Seventh.Infra.Data.DataContext;
 using Seventh.Infra.Data.Repository;
 using System.Reflection;
@@ -35,11 +36,16 @@ namespace Seventh.Infra.IoC
             services.AddHangfireServer();
 
             //Commands
-            services.AddScoped<IRequestHandler<AddVideoCommand, AddVideoResponse>, AddVideoCommandHandler>();
+            services.AddScoped<IRequestHandler<AddVideoCommand, AddVideoCommandResponse>, AddVideoCommandHandler>();
+            services.AddScoped<IRequestHandler<DeleteVideoCommand, DeleteVideoCommandResponse>, DeleteVideoCommandHandler>();
 
             //Queries
-            services.AddScoped<IRequestHandler<GetAllVideosByServerQuery, GetAllVideosByServerResponse>, GetAllVideosByServerQueryHandler>();
-            services.AddScoped<IRequestHandler<GetVideoByIdQuery, GetVideoByIdResponse>, GetVideoByIdQueryHandler>();
+            services.AddScoped<IRequestHandler<GetAllVideosByServerQuery, GetAllVideosByServerQueryResponse>, GetAllVideosByServerQueryHandler>();
+            services.AddScoped<IRequestHandler<GetVideoByIdQuery, GetVideoByIdQueryResponse>, GetVideoByIdQueryHandler>();
+            services.AddScoped<IRequestHandler<GetVideoContentByIdQuery, GetVideoContentByIdQueryResponse>, GetVideoContentByIdQueryHandler>();
+
+            //Notifications
+            services.AddScoped<NotificationContext>();
         }
     }
 }

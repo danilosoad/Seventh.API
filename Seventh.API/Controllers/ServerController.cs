@@ -113,7 +113,6 @@ namespace Seventh.API.Controllers
         [Route("servers/{serverId}/videos/{videoId}​")]
         public async Task<IActionResult> GetVideoById(Guid serverId, Guid videoId)
         {
-            //var video = await _serverService.GetVideoByIdAsync(serverId, videoId);
             var video = await _mediator.Send(new GetVideoByIdQuery(serverId, videoId));
 
             if (video == null)
@@ -126,21 +125,21 @@ namespace Seventh.API.Controllers
         [Route("servers/{serverId}/videos/{videoId}/binary​")]
         public async Task<IActionResult> GetVideoContentById(Guid serverId, Guid videoId)
         {
-            var videoBinaryContent = await _serverService.GetVideoContent(serverId, videoId);
+            var response = await _mediator.Send(new GetVideoContentByIdQuery(serverId, videoId));
 
-            if (videoBinaryContent == null)
+            if (response.VideoContent == null)
                 return NoContent();
 
-            return Ok(videoBinaryContent);
+            return Ok(response);
         }
 
         [HttpDelete]
         [Route("servers/{serverId}/videos/{videoId}​")]
         public async Task<IActionResult> DeleteVideoById(Guid serverId, Guid videoId)
         {
-            await _serverService.RemoveVideoAsync(serverId, videoId);
+            var response = await _mediator.Send(new DeleteVideoCommand(serverId, videoId));
 
-            return Ok();
+            return Ok(response.Message);
         }
 
         [HttpGet]

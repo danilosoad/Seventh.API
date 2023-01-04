@@ -6,7 +6,7 @@ using Seventh.Domain.Entities.Servers.Repository;
 
 namespace Seventh.Application.Handlers.Videos
 {
-    public class GetAllVideosByServerQueryHandler : IRequestHandler<GetAllVideosByServerQuery, GetAllVideosByServerResponse>
+    public class GetAllVideosByServerQueryHandler : IRequestHandler<GetAllVideosByServerQuery, GetAllVideosByServerQueryResponse>
     {
         private readonly IServerRepository _serverRepository;
 
@@ -15,9 +15,9 @@ namespace Seventh.Application.Handlers.Videos
             _serverRepository = serverRepository;
         }
 
-        public async Task<GetAllVideosByServerResponse> Handle(GetAllVideosByServerQuery request, CancellationToken cancellationToken)
+        public async Task<GetAllVideosByServerQueryResponse> Handle(GetAllVideosByServerQuery request, CancellationToken cancellationToken)
         {
-            var response = new GetAllVideosByServerResponse();
+            var response = new GetAllVideosByServerQueryResponse();
             var videos = await _serverRepository.GetVideosByServerIdAsync(request.ServerId);
 
             if (videos.Any())

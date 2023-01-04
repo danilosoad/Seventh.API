@@ -1,8 +1,8 @@
 ﻿namespace Seventh.Application.Responses
 {
-    public class AddVideoResponse
+    public class DeleteVideoCommandResponse
     {
-        public Guid IdVideo { get; set; }
+        public Guid VideoId { get; set; }
         public string Message { get; set; }
     }
 }

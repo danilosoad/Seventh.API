@@ -3,7 +3,7 @@ using Seventh.Application.Responses;
 
 namespace Seventh.Application.Commands.Video
 {
-    public class AddVideoCommand : IRequest<AddVideoResponse>
+    public class AddVideoCommand : IRequest<AddVideoCommandResponse>
     {
         public string Description { get; set; }
 

@@ -20,19 +20,19 @@ namespace Seventh.Domain.Entities.Videos.Validation
         public void Id()
         {
             RuleFor(x => x.Id).NotEmpty()
-                                .WithMessage(MessagesResource.RequiredField);
+                                .WithMessage(ResponseMessages.RequiredField);
         }
 
         public void Description()
         {
             RuleFor(x => x.Description).NotEmpty()
-                                .WithMessage(MessagesResource.RequiredField);
+                                .WithMessage(ResponseMessages.RequiredField);
         }
 
         public void Content()
         {
             RuleFor(x => x.VideoContent).NotEmpty()
-                                .WithMessage(MessagesResource.RequiredField);
+                                .WithMessage(ResponseMessages.RequiredField);
         }
     }
 }
