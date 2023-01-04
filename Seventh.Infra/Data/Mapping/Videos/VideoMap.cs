@@ -13,6 +13,8 @@ namespace Seventh.Infra.Data.Mapping.Videos
             builder.Property(x => x.Id).IsRequired().ValueGeneratedNever();
             builder.Property(x => x.CreatedAt).IsRequired();
             builder.Property(x => x.Description).IsRequired();
+
+  
         }
     }
 }

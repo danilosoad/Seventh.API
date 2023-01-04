@@ -8,6 +8,9 @@ namespace Seventh.Infra.Data.Mapping
     {
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
+            builder.Ignore(x => x.ValidationResult);
+            builder.Ignore(x => x.Invalid);
+            builder.Ignore(x => x.Valid);
         }
     }
 }
