@@ -117,7 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CampoObrigatorio" xml:space="preserve">
-    <value>O Campo '{PropertyName}' é obrigatório.</value>
+  <data name="AddVideoSuccess" xml:space="preserve">
+    <value>Video adicionado com sucesso</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>O campo {PropertyName} é obrigatório</value>
   </data>
 </root>

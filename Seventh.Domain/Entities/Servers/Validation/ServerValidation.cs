@@ -36,25 +36,25 @@ namespace Seventh.Domain.Entities.Servers.Validation
         public void Id()
         {
             RuleFor(x => x.Id).NotEmpty()
-                                .WithMessage(MensagemResource.CampoObrigatorio);
+                                .WithMessage(MessagesResource.RequiredField);
         }
 
         public void Name()
         {
             RuleFor(x => x.Name).NotEmpty()
-                                .WithMessage(MensagemResource.CampoObrigatorio);
+                                .WithMessage(MessagesResource.RequiredField);
         }
 
         public void EnderecoIp()
         {
             RuleFor(x => x.EnderecoIp).NotEmpty()
-                                .WithMessage(MensagemResource.CampoObrigatorio);
+                                .WithMessage(MessagesResource.RequiredField);
         }
 
         public void PortaIp()
         {
             RuleFor(x => x.PortaIp).NotEmpty()
-                                .WithMessage(MensagemResource.CampoObrigatorio);
+                                .WithMessage(MessagesResource.RequiredField);
         }
     }
 }

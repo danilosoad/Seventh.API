@@ -22,14 +22,14 @@ namespace Seventh.Domain.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class MensagemResource {
+    internal class MessagesResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal MensagemResource() {
+        internal MessagesResource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Seventh.Domain.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Seventh.Domain.Resources.MensagemResource", typeof(MensagemResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Seventh.Domain.Resources.MessagesResource", typeof(MessagesResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,20 @@ namespace Seventh.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to O Campo &apos;{PropertyName}&apos; é obrigatório..
+        ///   Looks up a localized string similar to Video adicionado com sucesso.
         /// </summary>
-        internal static string CampoObrigatorio {
+        internal static string AddVideoSuccess {
             get {
-                return ResourceManager.GetString("CampoObrigatorio", resourceCulture);
+                return ResourceManager.GetString("AddVideoSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo {PropertyName} é obrigatório.
+        /// </summary>
+        internal static string RequiredField {
+            get {
+                return ResourceManager.GetString("RequiredField", resourceCulture);
             }
         }
     }

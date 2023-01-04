@@ -1,3 +1,4 @@
+using Hangfire;
 using Seventh.API.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,5 +25,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseHangfireDashboard();
 
 app.Run();

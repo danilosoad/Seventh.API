@@ -53,9 +53,13 @@ namespace Seventh.Infra.Data.Repository
 
         public async Task<IEnumerable<Video>> GetVideosByServerIdAsync(Guid Id)
         {
-            var videos = await _context.Servers.AsQueryable().AsNoTracking().FirstOrDefaultAsync(x => x.Id == Id);
+            var server = await _context.Servers
+                                        .AsQueryable()
+                                        .AsNoTracking()
+                                        .Include(x => x.Videos)
+                                        .FirstOrDefaultAsync(x => x.Id == Id);
 
-            return videos.Videos;
+            return server?.Videos ?? Enumerable.Empty<Video>();
         }
 
         public async Task<Video> GetVideosByIdAsync(Guid Id)

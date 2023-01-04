@@ -12,7 +12,6 @@ namespace Seventh.Domain.Entities.Videos
 
         public Guid ServerId { get; set; }
 
-        //public Server Server { get; set; }
 
         protected Video()
         {

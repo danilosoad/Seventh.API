@@ -34,6 +34,8 @@ namespace Seventh.Application.Services
 
         Task RemoveVideoAsync(Guid serverId, Guid videoId);
 
+        Task RecycleVideos(int days);
+
         #endregion Videos
     }
 }

@@ -144,6 +144,10 @@ namespace Seventh.Application.Services
                 throw new Exception("servidor não encontrado");
         }
 
+        public async Task RecycleVideos(int days)
+        {
+        }
+
         #endregion Video
     }
 }
