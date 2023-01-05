@@ -10,7 +10,6 @@ using Seventh.Application.Queries.Server;
 using Seventh.Application.Queries.Videos;
 using Seventh.Application.Responses;
 using Seventh.Application.Responses.Server;
-using Seventh.Application.Services;
 using Seventh.Domain.Entities.Servers.Repository;
 using Seventh.Domain.Entities.Servers.Validation;
 using Seventh.Domain.Notifications;
@@ -26,9 +25,6 @@ namespace Seventh.Infra.IoC
         {
             //MediatR
             services.AddMediatR(Assembly.GetExecutingAssembly());
-
-            //Services
-            services.AddScoped<IServerService, ServerService>();
 
             //Data
             services.AddScoped<Context>();

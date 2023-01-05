@@ -6,7 +6,6 @@ using Seventh.Application.Commands.Servers;
 using Seventh.Application.Commands.Videos;
 using Seventh.Application.Queries.Server;
 using Seventh.Application.Queries.Videos;
-using Seventh.Application.Services;
 
 namespace Seventh.API.Controllers
 {
@@ -14,12 +13,10 @@ namespace Seventh.API.Controllers
     [Route("api")]
     public class ServerController : ControllerBase
     {
-        private readonly IServerService _serverService;
         private readonly IMediator _mediator;
 
-        public ServerController(IServerService serverService, IMediator mediator)
+        public ServerController(IMediator mediator)
         {
-            _serverService = serverService;
             _mediator = mediator;
         }
 
