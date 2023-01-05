@@ -1,4 +1,4 @@
-﻿using Seventh.Domain.Entities.Servers;
+﻿using Seventh.Domain.Entities.Videos.Validation;
 
 namespace Seventh.Domain.Entities.Videos
 {
@@ -12,8 +12,6 @@ namespace Seventh.Domain.Entities.Videos
 
         public Guid ServerId { get; set; }
 
-        //public Server Server { get; set; }
-
         protected Video()
         {
         }
@@ -25,6 +23,19 @@ namespace Seventh.Domain.Entities.Videos
             VideoContent = videoContent;
             CreatedAt = DateTime.Now;
             ServerId = serverId;
+
+            Validate(this, new VideoValidator());
+        }
+
+        public Video(string description, byte[] videoContent, Guid serverId, DateTime createdAt)
+        {
+            Id = Guid.NewGuid();
+            Description = description;
+            VideoContent = videoContent;
+            CreatedAt = createdAt;
+            ServerId = serverId;
+
+            Validate(this, new VideoValidator());
         }
     }
 }

@@ -1,9 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Seventh.API.ViewModels.Servers;
-using Seventh.API.ViewModels.Servers.Adapter;
 using Seventh.API.ViewModels.Videos;
-using Seventh.API.ViewModels.Videos.Adapter;
-using Seventh.Application.Services;
+using Seventh.Application.Commands.Recycles;
+using Seventh.Application.Commands.Servers;
+using Seventh.Application.Commands.Videos;
+using Seventh.Application.Queries.Recycles;
+using Seventh.Application.Queries.Server;
+using Seventh.Application.Queries.Videos;
 
 namespace Seventh.API.Controllers
 {
@@ -11,11 +15,11 @@ namespace Seventh.API.Controllers
     [Route("api")]
     public class ServerController : ControllerBase
     {
-        private readonly IServerService _serverService;
+        private readonly IMediator _mediator;
 
-        public ServerController(IServerService serverService)
+        public ServerController(IMediator mediator)
         {
-            _serverService = serverService;
+            _mediator = mediator;
         }
 
         #region Server
@@ -24,10 +28,10 @@ namespace Seventh.API.Controllers
         [Route("servers")]
         public async Task<IActionResult> GetServers()
         {
-            var servers = await _serverService.GetServersAsync();
+            var response = await _mediator.Send(new GetAllServersQuery());
 
-            if (servers.Any())
-                return Ok(servers.ToList());
+            if (response.Servers.Any())
+                return Ok(response.Servers);
 
             return NoContent();
         }
@@ -36,48 +40,45 @@ namespace Seventh.API.Controllers
         [Route("servers/available/{serverId}​")]
         public async Task<IActionResult> IsServerAvailable(Guid serverId)
         {
-            var isAvailable = await _serverService.IsServerAvailable(serverId);
+            var response = await _mediator.Send(new ServerIsAvailableQuery(serverId));
 
-            return Ok(isAvailable);
+            return Ok(response);
         }
 
         [HttpGet]
         [Route("servers/{serverId}")]
         public async Task<IActionResult> GetServerbyId(Guid serverId)
         {
-            var server = await _serverService.GetServerByIdAsync(serverId);
+            var response = await _mediator.Send(new GetServersByIdQuery(serverId));
 
-            if (server == null)
-                return NoContent();
-
-            return Ok(server);
+            return Ok(response);
         }
 
         [HttpPost]
         [Route("server")]
         public async Task<IActionResult> CreateServer([FromBody] ServerViewModel viewModel)
         {
-            var server = viewModel.ConvertToServer();
-            await _serverService.AddServerAsync(server);
+            var response = await _mediator.Send(new AddServerCommand(viewModel.Name, viewModel.EnderecoIp, viewModel.PortaIp));
 
-            return Ok(server.Id);
+            return Ok(response);
         }
 
         [HttpPut]
-        [Route("{serverId}")]
+        [Route("servers/{serverId}")]
         public async Task<IActionResult> UpdateServer([FromBody] ServerViewModel viewModel, Guid serverId)
         {
-            var server = viewModel.ConvertToServer(serverId);
-            await _serverService.UpdateServerAsync(server);
-            return Ok();
+            var response = await _mediator.Send(new UpdateServerCommand(viewModel.Name, viewModel.EnderecoIp, viewModel.PortaIp, serverId));
+
+            return Ok(response);
         }
 
         [HttpDelete]
         [Route("servers/{serverId}")]
         public async Task<IActionResult> RemoveServer(Guid serverId)
         {
-            await _serverService.RemoveServerAsync(serverId);
-            return Ok();
+            var response = await _mediator.Send(new DeleteServerCommand(serverId));
+
+            return Ok(response);
         }
 
         #endregion Server
@@ -88,20 +89,19 @@ namespace Seventh.API.Controllers
         [Route("servers/{serverId}/videos")]
         public async Task<IActionResult> AddVideo([FromBody] VideoViewModel viewModel, Guid serverId)
         {
-            var video = viewModel.ConvertToVideo(serverId);
-            await _serverService.AddVideoAsync(video, serverId);
+            var response = await _mediator.Send(new AddVideoCommand(viewModel.Description, viewModel.VideoContent, serverId));
 
-            return Ok();
+            return Ok(response);
         }
 
         [HttpGet]
         [Route("servers/{serverId}/videos")]
         public async Task<IActionResult> GetVideosByServerId(Guid serverId)
         {
-            var videos = await _serverService.GetVideosAsync(serverId);
+            var response = await _mediator.Send(new GetAllVideosByServerQuery(serverId));
 
-            if (videos.Any())
-                return Ok(videos);
+            if (response.Videos.Any())
+                return Ok(response.Videos);
 
             return NoContent();
         }
@@ -110,33 +110,49 @@ namespace Seventh.API.Controllers
         [Route("servers/{serverId}/videos/{videoId}​")]
         public async Task<IActionResult> GetVideoById(Guid serverId, Guid videoId)
         {
-            var video = await _serverService.GetVideoByIdAsync(serverId, videoId);
+            var response = await _mediator.Send(new GetVideoByIdQuery(serverId, videoId));
 
-            if (video == null)
+            if (response == null)
                 return NoContent();
 
-            return Ok(video);
+            return Ok(response);
         }
 
         [HttpGet]
         [Route("servers/{serverId}/videos/{videoId}/binary​")]
         public async Task<IActionResult> GetVideoContentById(Guid serverId, Guid videoId)
         {
-            var videoBinaryContent = await _serverService.GetVideoContent(serverId, videoId);
+            var response = await _mediator.Send(new GetVideoContentByIdQuery(serverId, videoId));
 
-            if (videoBinaryContent == null)
+            if (response.VideoContent == null)
                 return NoContent();
 
-            return Ok(videoBinaryContent);
+            return Ok(response);
         }
 
         [HttpDelete]
         [Route("servers/{serverId}/videos/{videoId}​")]
         public async Task<IActionResult> DeleteVideoById(Guid serverId, Guid videoId)
         {
-            await _serverService.RemoveVideoAsync(serverId, videoId);
+            var response = await _mediator.Send(new DeleteVideoCommand(serverId, videoId));
 
-            return Ok();
+            return Ok(response.Message);
+        }
+
+        [HttpGet]
+        [Route("recycler/process/{days}​")]
+        public async Task<IActionResult> Recycle(int days)
+        {
+            var response = await _mediator.Send(new RecycleVideoCommand(days));
+            return Accepted();
+        }
+
+        [HttpGet]
+        [Route("recycler/status​")]
+        public async Task<IActionResult> RecycleStatus()
+        {
+            var response = await _mediator.Send(new GetRecycleStatusQuery());
+            return Ok(response.Message);
         }
 
         #endregion Video

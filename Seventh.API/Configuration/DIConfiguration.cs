@@ -1,4 +1,5 @@
-﻿using Seventh.Infra.IoC;
+﻿using Seventh.API.Filters;
+using Seventh.Infra.IoC;
 
 namespace Seventh.API.Configuration
 {
@@ -7,6 +8,11 @@ namespace Seventh.API.Configuration
         public static void AddDependencyInjection(this IServiceCollection services)
         {
             BootStrapper.RegisterServices(services);
+        }
+
+        public static void AddFilter(this IServiceCollection services)
+        {
+            services.AddMvc(options => options.Filters.Add<NotificationFilter>());
         }
     }
 }

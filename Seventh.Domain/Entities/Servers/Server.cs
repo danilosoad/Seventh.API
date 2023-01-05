@@ -1,4 +1,5 @@
-﻿using Seventh.Domain.Entities.Videos;
+﻿using Seventh.Domain.Entities.Servers.Validation;
+using Seventh.Domain.Entities.Videos;
 
 namespace Seventh.Domain.Entities.Servers
 {
@@ -27,6 +28,8 @@ namespace Seventh.Domain.Entities.Servers
             Name = name;
             EnderecoIp = enderecoIp;
             PortaIp = portaIp;
+
+            Validate(this, new ServerValidation());
         }
 
         public void Update(Server server)

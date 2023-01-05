@@ -1,3 +1,4 @@
+using Hangfire;
 using Seventh.API.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDependencyInjection();
+builder.Services.AddFilter();
 
 var app = builder.Build();
 
@@ -24,5 +26,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseHangfireDashboard();
 
 app.Run();
+

@@ -1,4 +1,5 @@
-﻿using Seventh.Domain.Entities.Videos;
+﻿using Seventh.Domain.Entities.Recycles;
+using Seventh.Domain.Entities.Videos;
 
 namespace Seventh.Domain.Entities.Servers.Repository
 {
@@ -32,6 +33,15 @@ namespace Seventh.Domain.Entities.Servers.Repository
 
         void DeleteVideo(Video video);
 
+        void RecycleVideos(int days);
+
+        Task AddRecycleAsync(Recycle recycle);
+
+        Task<Recycle> GetRecycleByJobIdAsync(string Id);
+
+        Task<Recycle> GetRecycleStatusAsync();
+
+        void UpdateStatusRecycle(Recycle recycle);
 
         #endregion Video
     }
