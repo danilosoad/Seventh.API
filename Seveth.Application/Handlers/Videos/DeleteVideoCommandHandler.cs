@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Seventh.Application.Commands.Video;
+using Seventh.Application.Commands.Videos;
 using Seventh.Application.Responses;
 using Seventh.Domain.Entities.Servers.Repository;
 using Seventh.Domain.Notifications;

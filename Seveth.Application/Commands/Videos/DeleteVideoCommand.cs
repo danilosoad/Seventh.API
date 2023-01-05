@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Seventh.Application.Responses;
 
-namespace Seventh.Application.Commands.Video
+namespace Seventh.Application.Commands.Videos
 {
     public class DeleteVideoCommand : IRequest<DeleteVideoCommandResponse>
     {

@@ -2,10 +2,14 @@
 using Hangfire.MemoryStorage;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Seventh.Application.Commands.Video;
+using Seventh.Application.Commands.Servers;
+using Seventh.Application.Commands.Videos;
+using Seventh.Application.Handlers.Servers;
 using Seventh.Application.Handlers.Videos;
+using Seventh.Application.Queries.Server;
 using Seventh.Application.Queries.Videos;
 using Seventh.Application.Responses;
+using Seventh.Application.Responses.Server;
 using Seventh.Application.Services;
 using Seventh.Domain.Entities.Servers.Repository;
 using Seventh.Domain.Entities.Servers.Validation;
@@ -43,6 +47,12 @@ namespace Seventh.Infra.IoC
             services.AddScoped<IRequestHandler<GetAllVideosByServerQuery, GetAllVideosByServerQueryResponse>, GetAllVideosByServerQueryHandler>();
             services.AddScoped<IRequestHandler<GetVideoByIdQuery, GetVideoByIdQueryResponse>, GetVideoByIdQueryHandler>();
             services.AddScoped<IRequestHandler<GetVideoContentByIdQuery, GetVideoContentByIdQueryResponse>, GetVideoContentByIdQueryHandler>();
+            services.AddScoped<IRequestHandler<GetAllServersQuery, GetAllServersQueryResponse>, GetAllServersQueryHandler>();
+            services.AddScoped<IRequestHandler<ServerIsAvailableQuery, bool>, ServerIsAvailableQueryHandler>();
+            services.AddScoped<IRequestHandler<GetServersByIdQuery, GetAllServersByIdQueryResponse>, GetServersByIdQueryHandler>();
+            services.AddScoped<IRequestHandler<AddServerCommand, AddServerCommandResponse>, AddServerCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdateServerCommand, UpdateServerCommandResponse>, UpdateServerCommandHandler>();
+            services.AddScoped<IRequestHandler<DeleteServerCommand, DeleteServerCommandResponse>, DeleteServerCommandHandler>();
 
             //Notifications
             services.AddScoped<NotificationContext>();
