@@ -26,5 +26,16 @@ namespace Seventh.Domain.Entities.Videos
 
             Validate(this, new VideoValidator());
         }
+
+        public Video(string description, byte[] videoContent, Guid serverId, DateTime createdAt)
+        {
+            Id = Guid.NewGuid();
+            Description = description;
+            VideoContent = videoContent;
+            CreatedAt = createdAt;
+            ServerId = serverId;
+
+            Validate(this, new VideoValidator());
+        }
     }
 }

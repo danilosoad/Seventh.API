@@ -9,5 +9,6 @@
         public const string VideoNotFound = "Video não encontrado";
         public const string UpdateServerSuccess = "Servidor atualizado com sucesso";
         public const string RemoveServerSuccess = "Servidor excluído com sucesso";
+        public const string JobNotRunning = "not running";
     }
 }

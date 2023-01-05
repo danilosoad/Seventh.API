@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Seventh.API.ViewModels.Servers;
 using Seventh.API.ViewModels.Videos;
+using Seventh.Application.Commands.Recycles;
 using Seventh.Application.Commands.Servers;
 using Seventh.Application.Commands.Videos;
+using Seventh.Application.Queries.Recycles;
 using Seventh.Application.Queries.Server;
 using Seventh.Application.Queries.Videos;
 
@@ -141,14 +143,16 @@ namespace Seventh.API.Controllers
         [Route("recycler/process/{days}​")]
         public async Task<IActionResult> Recycle(int days)
         {
-            return Ok();
+            var response = await _mediator.Send(new RecycleVideoCommand(days));
+            return Accepted();
         }
 
         [HttpGet]
         [Route("recycler/status​")]
         public async Task<IActionResult> RecycleStatus()
         {
-            return Ok();
+            var response = await _mediator.Send(new GetRecycleStatusQuery());
+            return Ok(response.Message);
         }
 
         #endregion Video

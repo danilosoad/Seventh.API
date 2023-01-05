@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Seventh.Domain.Entities.Recycles;
 using Seventh.Domain.Entities.Servers;
 using Seventh.Domain.Entities.Servers.Repository;
 using Seventh.Domain.Entities.Videos;
@@ -14,6 +15,8 @@ namespace Seventh.Infra.Data.Repository
         {
             _context = context;
         }
+
+        #region SERVER
 
         public async Task AddServerAsync(Server server)
         {
@@ -34,7 +37,8 @@ namespace Seventh.Infra.Data.Repository
 
         public async Task<Server> GetServerByIdAsync(Guid id)
         {
-            return await _context.Servers.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Servers.AsQueryable()
+                                         .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IEnumerable<Server>> GetServersAsync()
@@ -51,6 +55,10 @@ namespace Seventh.Infra.Data.Repository
             _context.SaveChanges();
         }
 
+        #endregion SERVER
+
+        #region VIDEOS
+
         public async Task<IEnumerable<Video>> GetVideosByServerIdAsync(Guid Id)
         {
             var server = await _context.Servers
@@ -64,12 +72,16 @@ namespace Seventh.Infra.Data.Repository
 
         public async Task<Video> GetVideosByIdAsync(Guid Id)
         {
-            return await _context.Videos.AsQueryable().AsNoTracking().FirstOrDefaultAsync(x => x.Id == Id);
+            return await _context.Videos.AsQueryable()
+                                        .AsNoTracking()
+                                        .FirstOrDefaultAsync(x => x.Id == Id);
         }
 
         public async Task<byte[]> GetVideoContentAsync(Guid id)
         {
-            var video = await _context.Videos.AsQueryable().AsNoTracking().FirstOrDefaultAsync();
+            var video = await _context.Videos.AsQueryable()
+                                             .AsNoTracking()
+                                             .FirstOrDefaultAsync();
 
             return video.VideoContent;
         }
@@ -85,5 +97,44 @@ namespace Seventh.Infra.Data.Repository
             _context.Videos.Remove(video);
             _context.SaveChanges();
         }
+
+        public void RecycleVideos(int days)
+        {
+            var oldVideos = _context.Videos.Where(x => x.CreatedAt < DateTime.Now.AddDays(-days))
+                                           .AsQueryable()
+                                           .ToList();
+
+            //utilizando remove range devido a estar utilizando EF in memory e ter poucos registros
+            //EF Core 7 ja possui bulk delete nativo
+
+            _context.RemoveRange(oldVideos);
+            _context.SaveChanges();
+        }
+
+        public async Task AddRecycleAsync(Recycle recycle)
+        {
+            await _context.AddAsync(recycle);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Recycle> GetRecycleByJobIdAsync(string Id)
+        {
+            return await _context.Recycles.AsQueryable()
+                                          .FirstOrDefaultAsync(x => x.JobId == Id);
+        }
+
+        public async Task<Recycle> GetRecycleStatusAsync()
+        {
+            return await _context.Recycles.AsQueryable()
+                                          .FirstOrDefaultAsync();
+        }
+
+        public void UpdateStatusRecycle(Recycle recycle)
+        {
+            _context.Recycles.Update(recycle);
+            _context.SaveChanges();
+        }
+
+        #endregion VIDEOS
     }
 }

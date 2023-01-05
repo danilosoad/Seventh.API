@@ -4,6 +4,7 @@ using Seventh.Application.Responses;
 using Seventh.Domain.Entities.Servers.Repository;
 using Seventh.Domain.Entities.Videos;
 using Seventh.Domain.Notifications;
+using Seventh.Domain.Resources;
 
 namespace Seventh.Application.Handlers.Videos
 {
@@ -20,8 +21,18 @@ namespace Seventh.Application.Handlers.Videos
 
         public async Task<AddVideoCommandResponse> Handle(AddVideoCommand request, CancellationToken cancellationToken)
         {
-            //add video validation
+            var currentServer = await _serverRepository.GetServerByIdAsync(request.ServerId);
+
+            if (currentServer == null)
+            {
+                _notificationContext.AddNotification("", ResponseMessages.ServerNotFound);
+                return new AddVideoCommandResponse();
+            }
+
             var video = new Video(request.Description, request.VideoContent, request.ServerId);
+
+            //Para testar o range de dias
+            //var video = new Video(request.Description, request.VideoContent, request.ServerId, DateTime.Now.AddDays(-20));
 
             if (video.Invalid)
             {
